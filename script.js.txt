@@ -1,0 +1,39 @@
+const display = document.getElementById("display");
+
+function press(value){
+    display.value += value;
+}
+
+function clearDisplay(){
+    display.value = "";
+}
+
+function calculate(){
+
+    try{
+        let answer = eval(display.value);
+
+        // 80% chance of being wrong
+        if(Math.random() < 0.8){
+
+            const wrongAnswers = [
+                answer + Math.floor(Math.random()*20)+1,
+                answer - Math.floor(Math.random()*20)-1,
+                answer * 2,
+                answer / 2,
+                42,
+                69,
+                404,
+                Math.floor(Math.random()*1000)
+            ];
+
+            answer = wrongAnswers[Math.floor(Math.random()*wrongAnswers.length)];
+        }
+
+        display.value = answer;
+
+    }catch{
+        display.value = "Error";
+    }
+
+}
