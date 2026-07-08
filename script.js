@@ -1,39 +1,26 @@
 const display = document.getElementById("display");
 
-function press(value){
-    display.value += value;
+function press(value) {
+  display.value += value;
 }
 
-function clearDisplay(){
-    display.value = "";
+function clearDisplay() {
+  display.value = "";
 }
 
-function calculate(){
+function calculate() {
+  try {
+    let correctAnswer = eval(display.value);
 
-    try{
-        let answer = eval(display.value);
+    // Always make it wrong
+    let wrongAnswer = correctAnswer;
 
-        // 80% chance of being wrong
-        if(Math.random() < 0.8){
-
-            const wrongAnswers = [
-                answer + Math.floor(Math.random()*20)+1,
-                answer - Math.floor(Math.random()*20)-1,
-                answer * 2,
-                answer / 2,
-                42,
-                69,
-                404,
-                Math.floor(Math.random()*1000)
-            ];
-
-            answer = wrongAnswers[Math.floor(Math.random()*wrongAnswers.length)];
-        }
-
-        display.value = answer;
-
-    }catch{
-        display.value = "Error";
+    while (wrongAnswer === correctAnswer) {
+      wrongAnswer = correctAnswer + Math.floor(Math.random() * 50) + 1;
     }
 
+    display.value = wrongAnswer;
+  } catch {
+    display.value = "Error";
+  }
 }
