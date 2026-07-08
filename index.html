@@ -40,8 +40,19 @@
     </div>
 
 <p id="message"></p>
+
+<div id="paymentPopup" class="popup">
+    <div class="popup-box">
+        <h2>Pay £0.10</h2>
+        <p>Pay to reveal your definitely correct answer.</p>
+
+        <div id="paypal-button-container"></div>
+
+        <button onclick="closePaymentPopup()">Cancel</button>
+    </div>
 </div>
 
+<script src="https://www.paypal.com/sdk/js?client-id=AQpOHjb9c4cyQdOMUP9X36kz3IrgcRGhA7cSC21XNQn05vmJfNwwKj2Y-9t9k2NnQwShvD8QX4MxfEtG&currency=GBP"></script>
 <script src="script.js"></script>
 
 </body>
