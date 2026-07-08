@@ -1,29 +1,38 @@
 const display = document.getElementById("display");
 
 function press(value) {
-  display.value += value;
+    display.value += value;
 }
 
 function clearDisplay() {
-  display.value = "";
+    display.value = "";
 }
 
 function backspace() {
     display.value = display.value.slice(0, -1);
 }
-function calculate() {
-  try {
-    let correctAnswer = eval(display.value);
 
-    // Always make it wrong
-    let wrongAnswer = correctAnswer;
+async function calculate() {
+    try {
+        const response = await fetch("http://localhost:3000/calculate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                equation: display.value
+            })
+        });
 
-    while (wrongAnswer === correctAnswer) {
-      wrongAnswer = correctAnswer + Math.floor(Math.random() * 50) + 1;
+        const data = await response.json();
+
+        if (data.answer !== undefined) {
+            display.value = data.answer;
+        } else {
+            display.value = "Error";
+        }
+
+    } catch {
+        display.value = "Backend off";
     }
-
-    display.value = wrongAnswer;
-  } catch {
-    display.value = "Error";
-  }
 }
