@@ -9,7 +9,7 @@
 <body>
 
 <div class="calculator">
-    <h1>Wrong Calculator</h1>
+    <h1>Calculator</h1>
 
     <input id="display" readonly>
 
@@ -22,21 +22,21 @@
         <button onclick="press('7')">7</button>
         <button onclick="press('8')">8</button>
         <button onclick="press('9')">9</button>
-        <button onclick="press('*')">×</button>
+        <button class="operator" onclick="press('*')">×</button>
 
         <button onclick="press('4')">4</button>
         <button onclick="press('5')">5</button>
         <button onclick="press('6')">6</button>
-        <button onclick="press('-')">−</button>
+        <button class="operator" onclick="press('-')">−</button>
 
         <button onclick="press('1')">1</button>
         <button onclick="press('2')">2</button>
         <button onclick="press('3')">3</button>
-        <button onclick="press('+')">+</button>
+        <button class="operator" onclick="press('+')">+</button>
 
-        <button onclick="press('0')">0</button>
+        <button class="zero" onclick="press('0')">0</button>
         <button onclick="press('.')">.</button>
-        <button onclick="calculate()">=</button>
+        <button class="operator" onclick="calculate()">=</button>
     </div>
 
 <p id="message"></p>
