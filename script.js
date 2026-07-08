@@ -1,4 +1,7 @@
 const display = document.getElementById("display");
+const paymentPopup = document.getElementById("paymentPopup");
+
+let savedEquation = "";
 
 function press(value) {
     display.value += value;
@@ -12,27 +15,46 @@ function backspace() {
     display.value = display.value.slice(0, -1);
 }
 
-async function calculate() {
-    try {
-        const response = await fetch("http://localhost:3000/calculate", {
+function calculate() {
+    if (display.value.trim() === "") return;
+
+    savedEquation = display.value;
+    paymentPopup.style.display = "flex";
+}
+
+function closePaymentPopup() {
+    paymentPopup.style.display = "none";
+}
+
+paypal.Buttons({
+    createOrder: async function () {
+        const response = await fetch("http://localhost:3000/create-order", {
+            method: "POST"
+        });
+
+        const order = await response.json();
+        return order.id;
+    },
+
+    onApprove: async function (data) {
+        const response = await fetch("http://localhost:3000/capture-order", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                equation: display.value
+                orderID: data.orderID,
+                equation: savedEquation
             })
         });
 
-        const data = await response.json();
+        const result = await response.json();
 
-        if (data.answer !== undefined) {
-            display.value = data.answer;
+        if (result.answer !== undefined) {
+            display.value = result.answer;
+            paymentPopup.style.display = "none";
         } else {
-            display.value = "Error";
+            display.value = "Payment error";
         }
-
-    } catch {
-        display.value = "Backend off";
     }
-}
+}).render("#paypal-button-container");
